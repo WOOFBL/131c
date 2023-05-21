@@ -1,23 +1,42 @@
-import sys
+from collections import deque
 
-number= input("Введите число\n")
-print(type(number))
-number1= int(input("Введите 2 число \n"))
-print(type(number1))
-number2= bool(input("Введите 3 число \n"))
-print(type(number2))
-number3= complex(input("Введите 4 число \n"))
-print(type(number3))
-number4= float(input("Введите 5 число \n"))
-print(type(number4))
-import sys
-print("max int\n",sys.maxsize)
-print("max float\n",sys.float_info.max)
-print("вывод байт в cp1251\n")
-print(len('я люблю динамическую типизацию'.encode('cp1251')))
-print("вывод байт в utf-8\n")
-print(len('я люблю динамическую типизацию'.encode('utf-8')))
-print("вывод байт в utf-16\n")
-print(len('я люблю динамическую типизацию'.encode('utf-16')))
-print("вывод байт в utf-32\n")
-print(len('я люблю динамическую типизацию'.encode('utf-32')))
+
+graph = {'A': ['B', 'C'],
+         'B': ['D', 'E'],
+         'C': ['F'],
+         'D': [],
+         'E': ['F'],
+         'F': []}
+
+def bfs(graph, start):
+    queue = deque([start])
+    visited = set([start])
+
+    while queue:
+        vertex = queue.popleft()
+        print(vertex, end=' ')
+
+        for neighbor in graph[vertex]:
+            if neighbor not in visited:
+                queue.append(neighbor)
+                visited.add(neighbor)
+# bfs(graph, 'E')
+
+graph = {'A': ['B', 'C'],
+         'B': ['D', 'E'],
+         'C': ['F'],
+         'D': [],
+         'E': ['F'],
+         'F': []}
+
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(start)
+    print(start, end=' ')
+
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+dfs(graph, 'A')
